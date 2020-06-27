@@ -1,7 +1,9 @@
 import React, {Component} from 'react';
 import './style.sass';
 import './App.css';
-import Person from './Person/Person';
+
+import UserInput from './UserInput/UserInput';
+import UserOutput from './UserOutput/UserOutput';
 
 // const App = props => {
 //
@@ -33,11 +35,35 @@ import Person from './Person/Person';
 //         </div>
 //     );
 //
-
 // };
 class App extends Component {
 
     state = {
+        userName: 'Mike'
+    }
+
+    changeNameHandler = event => {
+        this.setState({
+           userName: event.target.value
+        });
+    }
+
+    render() {
+        return(
+            <div className="App">
+                <UserInput
+                    change={this.changeNameHandler}
+                    currentValue={this.state.userName}
+                />
+                <UserOutput name={this.state.userName} />
+                <UserOutput/>
+                <UserOutput/>
+                <UserOutput/>
+            </div>
+        )
+    }
+
+    /*state = {
         persons: [
             {name: 'Max', age: 19}
         ]
@@ -70,9 +96,15 @@ class App extends Component {
                     click={this.switchNameHandler.bind(this, 'Kris')}
                     change={this.changeNameHandler}
                 />
+                <Person
+                    name={this.state.persons[0].name}
+                    age={this.state.persons[0].age}
+                    click={this.switchNameHandler.bind(this, 'Kris')}
+                    change={this.changeNameHandler}
+                />
             </div>
         );
-    }
+    }*/
 }
 
 export default App;
