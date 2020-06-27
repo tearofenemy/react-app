@@ -1,9 +1,8 @@
 import React, {Component} from 'react';
 import './style.sass';
 import './App.css';
+import Person from "./Person/Person";
 
-import UserInput from './UserInput/UserInput';
-import UserOutput from './UserOutput/UserOutput';
 
 // const App = props => {
 //
@@ -39,6 +38,61 @@ import UserOutput from './UserOutput/UserOutput';
 class App extends Component {
 
     state = {
+        persons: [
+            {name: 'Max', age: 19}
+        ],
+        showPersons: false
+    };
+
+
+    changeNameHandler = (event) => {
+        this.setState({
+            persons: [
+                {name: event.target.value, age: 19},
+            ]
+        });
+    }
+
+    showPersonsHandler = () => {
+        const togglePersons = this.state.showPersons;
+        this.setState({showPersons: !togglePersons});
+    }
+
+    render() {
+        let persons = null;
+
+        if(this.state.showPersons) {
+            persons = (
+                <div>
+                    <Person
+                        name={this.state.persons[0].name}
+                        age={this.state.persons[0].age}
+                    />
+                    <Person
+                        name={this.state.persons[0].name}
+                        age={this.state.persons[0].age}
+                        change={this.changeNameHandler}
+                    />
+                </div>
+            );
+        }
+
+        return (
+            <div className="App">
+                <h1>Hello, I'm first React App</h1>
+                <button onClick={this.showPersonsHandler}>Show Persons</button>
+                {persons}
+            </div>
+        );
+    }
+
+
+    /*
+
+import UserInput from './UserInput/UserInput';
+import UserOutput from './UserOutput/UserOutput';
+    state = {
+
         userName: 'Mike'
     }
 
