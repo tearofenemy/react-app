@@ -1,8 +1,7 @@
 import React, {Component} from 'react';
-import {Button} from "@material-ui/core";
 import './App.css';
-import Person from "../components/Person/Person";
-
+import Persons from "../components/Persons/Persons";
+import Cockpit from "../components/Сockpit/Cockpit";
 
 // const App = props => {
 //
@@ -36,6 +35,11 @@ import Person from "../components/Person/Person";
 //
 // };
 class App extends Component {
+    constructor(props) {
+        super(props);
+        console.log('[App.js] constructor');
+    }
+
     state = {
         persons: [
             {id: 'some_str1', name: 'Max', age: 19},
@@ -44,6 +48,25 @@ class App extends Component {
         ],
         showPersons: false
     };
+
+    static getDerivedStateFromProps(props, state) {
+        console.log('[App.js] getDerivedStateFromProps', props);
+        return state;
+    }
+
+    componentDidMount() {
+        console.log('[App.js] componentDidMount');
+    }
+
+    shouldComponentUpdate(nextProps, nextState, nextContext) {
+        console.log('[App.js] shouldUpdate');
+        return true;
+    }
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        console.log('[App.js] componentDidUpdate');
+    }
+
 
     deletePersonHandler = personIndex => {
         const persons = [...this.state.persons];
@@ -76,59 +99,25 @@ class App extends Component {
     }
 
     render() {
-        const style_btn = {
-            padding: '16px',
-            color: 'white',
-            backgroundColor: 'green',
-            border: 'none',
-            fontSize: '20px',
-            cursor: 'pointer',
-            transition: 'all ease-in-out .25s',
-            ':hover': {
-                backgroundColor: 'lightgreen',
-                color: 'black'
-            }
-        };
-
+        console.log('[App.js] render');
         let persons = null;
 
         if(this.state.showPersons) {
-            persons = (
-                <div>
-                    {this.state.persons.map((person, index) => {
-                        return (
-                            <Person
-                                name={person.name}
-                                age={person.age}
-                                click={() => this.deletePersonHandler(index)}
-                                key={index}
-                                change={e => this.changeNameHandler(e, person.id)}
-                            />
-                        )
-                    })}
-                </div>
-            );
-
-            style_btn.backgroundColor = 'red';
-            style_btn[':hover'] = {
-                backgroundColor: 'salmon',
-                color: 'black'
-            };
-        }
-
-        const classes = [];
-
-        if(this.state.persons.length <= 2) {
-            classes.push('red');
-        }
-        if(this.state.persons.length <= 1) {
-            classes.push('bold');
+            persons = <Persons
+                        persons={this.state.persons}
+                        deleted={this.deletePersonHandler}
+                        changed={this.changeNameHandler}
+                    />;
         }
 
         return (
             <div className="App">
-                <p className={classes.join(' ')}>Hello, I'm first React App</p>
-                <Button onClick={this.showPersonsHandler} style={style_btn}>Show Persons</Button>
+                <Cockpit
+                    title={this.props.titleApp}
+                    showPersons={this.state.showPersons}
+                    click={this.showPersonsHandler}
+                    persons={this.state.persons}
+                />
                 {persons}
             </div>
         );

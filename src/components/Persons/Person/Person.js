@@ -5,10 +5,15 @@ import './Person.sass';
 class Person extends Component{
 
     render() {
+        console.log('[Person.js] rendering...');
         return (
             <div className="Person">
                 <p onClick={this.props.click}>My name is {this.props.name} </p>
-                <Input type="text" onChange={this.props.change} value={this.props.name}/>
+                <p>{this.props.children}</p>
+                <Input
+                    type="text"
+                    onChange={this.props.change}
+                    value={this.props.name}/>
             </div>
         );
     }
