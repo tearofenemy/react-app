@@ -46,7 +46,8 @@ class App extends Component {
             {id: 'some_str2', name: 'Jane', age: 18},
             {id: 'some_str3', name: 'Janny', age: 21}
         ],
-        showPersons: false
+        showPersons: false,
+        counter: 0
     };
 
     static getDerivedStateFromProps(props, state) {
@@ -66,7 +67,6 @@ class App extends Component {
     componentDidUpdate(prevProps, prevState, snapshot) {
         console.log('[App.js] componentDidUpdate');
     }
-
 
     deletePersonHandler = personIndex => {
         const persons = [...this.state.persons];
@@ -88,8 +88,11 @@ class App extends Component {
         const persons = [...this.state.persons];
         persons[personIndex] = person;
 
-        this.setState({
-            persons: persons
+        this.setState((prevState, props) => {
+            return {
+                persons: persons,
+                counter: this.state.counter++
+            }
         });
     }
 

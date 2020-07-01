@@ -1,12 +1,16 @@
-import Person from "./Persons/Person";
-import React, {Component} from "react";
+import Person from "./Person/Person";
+import React, {PureComponent} from "react";
 
-class Persons extends Component{
+class Persons extends PureComponent{
 
-    shouldComponentUpdate(nextProps, nextState, nextContext) {
+    /*shouldComponentUpdate(nextProps, nextState, nextContext) {
         console.log('[Persons.js] shouldComponentUpdate');
-        return true;
-    }
+        if (nextProps.persons !== this.props.persons) {
+            return true;
+        } else {
+            return false;
+        }
+    }*/
 
     getSnapshotBeforeUpdate(prevProps, prevState) {
         console.log('[Persons.js] getSnapshotBeforeUpdate');

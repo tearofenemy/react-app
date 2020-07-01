@@ -1,8 +1,15 @@
-import React from "react";
+import React, {useEffect} from "react";
 import {Button} from "@material-ui/core";
 import './Cockpit.sass';
 
-const cockpit = props => {
+function Cockpit(props) {
+
+    useEffect(() => {
+        console.log('[Cockpit.js] useEffect');
+        setTimeout(() => {
+            alert('Save data to cloud');
+        }, 1000)
+    }, []);
 
     let btn_color = 'primary';
 
@@ -27,4 +34,4 @@ const cockpit = props => {
     );
 };
 
-export default cockpit;
+export default Cockpit;
