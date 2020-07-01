@@ -1,4 +1,5 @@
 import React, {useEffect} from "react";
+import AuthContext from "../../context/auth-context";
 import {Button} from "@material-ui/core";
 import './Cockpit.sass';
 
@@ -30,6 +31,9 @@ function Cockpit(props) {
         <div>
             <p className={classes.join(' ')}>{props.title}</p>
             <Button variant="contained" color={btn_color} onClick={props.click}>Show Persons</Button>
+            <AuthContext.Consumer>
+                {(context) => <Button variant="contained" onClick={context.login}>Log in</Button>}
+            </AuthContext.Consumer>
         </div>
     );
 };

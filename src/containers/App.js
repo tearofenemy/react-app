@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import './App.css';
 import Persons from "../components/Persons/Persons";
 import Cockpit from "../components/Сockpit/Cockpit";
+import AuthContext from "../context/auth-context";
 
 // const App = props => {
 //
@@ -47,7 +48,8 @@ class App extends Component {
             {id: 'some_str3', name: 'Janny', age: 21}
         ],
         showPersons: false,
-        counter: 0
+        counter: 0,
+        isAuth: false
     };
 
     static getDerivedStateFromProps(props, state) {
@@ -96,6 +98,12 @@ class App extends Component {
         });
     }
 
+    loginHandler = () => {
+      this.setState({
+          isAuth: true
+      })
+    };
+
     showPersonsHandler = () => {
         const togglePersons = this.state.showPersons;
         this.setState({showPersons: !togglePersons});
@@ -110,19 +118,22 @@ class App extends Component {
                         persons={this.state.persons}
                         deleted={this.deletePersonHandler}
                         changed={this.changeNameHandler}
+                        isAuth={this.state.isAuth}
                     />;
         }
 
         return (
-            <div className="App">
-                <Cockpit
-                    title={this.props.titleApp}
-                    showPersons={this.state.showPersons}
-                    click={this.showPersonsHandler}
-                    persons={this.state.persons}
-                />
-                {persons}
-            </div>
+            <AuthContext.Provider value={{isAuth: this.state.isAuth, login: this.loginHandler}}>
+                <div className="App">
+                    <Cockpit
+                        title={this.props.titleApp}
+                        showPersons={this.state.showPersons}
+                        click={this.showPersonsHandler}
+                        persons={this.state.persons}
+                    />
+                    {persons}
+                </div>
+            </AuthContext.Provider>
         );
     }
 

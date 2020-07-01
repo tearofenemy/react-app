@@ -26,11 +26,11 @@ class Persons extends PureComponent{
         console.log('[Persons.js] rendering...');
         return this.props.persons.map((person, index) => {
             return <Person
-                name={person.name}
-                age={person.age}
-                click={() => this.props.deleted(index)}
-                key={index}
-                change={event => this.props.changed(event, person.id)}
+                        name={person.name}
+                        age={person.age}
+                        click={() => this.props.deleted(index)}
+                        key={index}
+                        change={event => this.props.changed(event, person.id)}
             />});
     }
 };
